@@ -29,5 +29,9 @@
   },
   "devDependencies": {
     "dotenv": "^16.0.2"
+  },
+  "engines": {
+    "node": "16.15.1",
+    "yarn": "1.x"
   }
 }
