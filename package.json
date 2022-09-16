@@ -26,10 +26,9 @@
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.19",
-    "sanitize-html": "^2.7.1"
-  },
-  "devDependencies": {
+    "sanitize-html": "^2.7.1",
     "dotenv": "^16.0.2"
+
   },
   "engines": {
     "node": "16.15.1",
