@@ -3,8 +3,8 @@ const path = require('path');
 const validator = require('express-validator');
 const session = require('express-session');
 const flash = require('connect-flash');
-const dotenv = require('dotenv');
-dotenv.config();
+// const dotenv = require('dotenv');
+// dotenv.config();
 
 const firebase = require('firebase-admin');
 const FirebaseStore = require('connect-session-firebase')(session);
