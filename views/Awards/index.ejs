@@ -1,0 +1,160 @@
+<%- contentFor('HeaderCss') %>
+<!-- DataTables -->
+<link href="/public/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+<link href="/public/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+<!-- Responsive datatable examples -->
+<link href="/public/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+<%- contentFor('breadcrumb') %>
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Awards</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript:;">App</a></li>
+                    <li class="breadcrumb-item active">Awards</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+<%- contentFor('body') %>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between">
+                    <h4 class="card-title">Awards</h4>
+                    <div class="col-auto">
+                        <a href="javasript:;" data-bs-toggle="modal" data-bs-target="#addAwards" class="btn btn-primary  waves-effect waves-light">Add Award</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="mb-4">
+                    <% if(error.length> 0) { %>
+                        <div class="alert alert-danger text-center mb-4 flash" role="alert">
+                            <%= error %>
+                        </div>
+                    <% } %>
+                    <% if(message.length> 0) { %>
+                        <div class="alert alert-success text-center mb-4 flash" role="alert">
+                            <%= message %>
+                        </div>
+                    <% } %>
+                </div>
+                <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Date</th>
+                        <th>Summary</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% for(var i=0; i< awards.length; i++) { %>
+                        <tr>
+                            <td>
+                                <h5 class="text-truncate font-size-14 mb-1"><%= awards[i].title %></h5>
+                            </td>
+                            <td>
+                                <span> <%= awards[i].date %></span>
+                            </td>
+                            <td>
+                                <p class="text-truncate mb-0"><%= awards[i].summary %></p>
+                            </td>
+                            <td>
+                                <a href="/awards/delete/<%= awards[i].id %>" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                    <% } %>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->
+
+<div class="modal fade" id="addAwards" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="addAwardsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addAwardsLabel">Add Award</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <form method="post" class="custom-validation">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" required class="form-control" id="title" name="title" placeholder="Enter Title">
+                </div>
+                <div class="mb-3">
+                    <label for="date" class="form-label">Date</label>
+                    <input type="date" required class="form-control" id="date" name="date" placeholder="Enter Date">
+                </div>
+                <div class="mb-3">
+                    <label for="summary" class="form-label">Summary</label>
+                    <textarea class="form-control" required id="summary" name="summary" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">cancel</button>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<%- contentFor('FooterJs') %>
+
+<!-- Required datatable js -->
+<script src="/public/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/public/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+
+<script src="public/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="public/assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+<script src="public/assets/libs/jszip/jszip.min.js"></script>
+<script src="public/assets/libs/pdfmake/build/pdfmake.min.js"></script>
+<script src="public/assets/libs/pdfmake/build/vfs_fonts.js"></script>
+<script src="public/assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="public/assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="public/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+
+<!-- Responsive examples -->
+<script src="public/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="public/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+<script src="/public/assets/libs/parsleyjs/parsley.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.custom-validation').parsley();
+        var table = $('#datatable').DataTable({
+            dom : 'Bfrtip',
+            lengthChange: false,
+            buttons: ['copy', 'excel', 'pdf', 'print'],
+            language: {
+                searchPlaceholder: 'Search awards...',
+                emptyTable: "No awards available",
+            },
+        });
+
+        table.buttons().container()
+            .appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
+
+        $(".dataTables_length select").addClass('form-select form-select-sm');
+    } );
+</script>
+
+<%- contentFor('BottomJs') %>

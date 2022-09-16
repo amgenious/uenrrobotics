@@ -1,0 +1,127 @@
+<%- contentFor('HeaderCss') %>
+<link href="/public/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+<%- contentFor('breadcrumb') %>
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Add Member</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="/members">Members</a></li>
+                    <li class="breadcrumb-item active">Add Member</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<%- contentFor('body') %>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+
+               <div class="d-flex justify-content-between">
+                   <h4 class="card-title">Member Form</h4>
+                 <div class="col-auto">
+                     <a href="/members" class="btn btn-primary">Members</a>
+                 </div>
+               </div>
+
+            </div>
+            <div class="card-body">
+                <div class="mb-4">
+                    <% if(error.length> 0) { %>
+                        <div class="alert alert-danger text-center mb-4 flash" role="alert">
+                            <%= error %>
+                        </div>
+                    <% } %>
+                    <% if(message.length> 0) { %>
+                        <div class="alert alert-success text-center mb-4 flash" role="alert">
+                            <%= message %>
+                        </div>
+                    <% } %>
+                </div>
+              <form class="custom-validation" method="post">
+                  <div class="row">
+                      <div class="col-lg-5 ">
+                           <div class="row mb-4">
+                                <label for="name" class="col-sm-3 col-form-label">Name</label>
+
+                                <div class="col-sm-9">
+                                  <input type="text"  name="name" placeholder="Student's Name" required class="form-control" id="name">
+                                </div>
+                            </div>
+                           <div class="row mb-4">
+                                <label for="phone" class="col-sm-3 col-form-label">Phone Number</label>
+
+                                <div class="col-sm-9">
+                                  <input type="text" data-parsley-length="[9,13]" data-parsley-type="number" name="phone" placeholder="Phone Number" required class="form-control" id="phone">
+                                </div>
+                            </div>
+                           <div class="row mb-4">
+                                <label for="level" class="col-sm-3 col-form-label">Level</label>
+
+                                <div class="col-sm-9">
+                                  <input type="text"  data-parsley-type="digits" name="level" placeholder="Level" required class="form-control" id="level">
+                                </div>
+                            </div>
+                      </div>
+                      <div class="col-lg-6 ms-lg-auto">
+                          <div class="row mb-4">
+                              <label for="email" class="col-sm-3 col-form-label">Email </label>
+
+                              <div class="col-sm-9">
+                                  <input type="email" id="email" name="email" data-parsley-type="email" placeholder="Student's Email (optional)"  class="form-control" >
+                              </div>
+                          </div>
+                          <div class="row mb-4">
+                              <label for="program" class="col-sm-3 col-form-label">Program </label>
+
+                              <div class="col-sm-9">
+                                  <input type="text" id="program" name="program" required placeholder="Program of Study"  class="form-control" >
+                              </div>
+                          </div>
+                          <div class="mb-3 row">
+                              <label class="col-md-2 col-form-label" for="teams">Teams</label>
+                              <div class="col-md-10">
+                                  <select class="form-select" required name="team" id="teams">
+                                      <option value="" >Select Team</option>
+                                      <option value="Software Team">Software Team</option>
+                                      <option value="3D Modelling Team">3D Modelling Team</option>
+                                      <option value="Hardware & Prototyping Team">Hardware & Prototyping Team</option>
+                                      <option value="Research & Pitching Team">Research & Pitching Team</option>
+
+                                  </select>
+                              </div>
+                          </div>
+                          <div class="mb-3 d-flex justify-content-end">
+                              <button class="btn btn-primary" type="submit">Add Member</button>
+                          </div>
+                      </div>
+                  </div>
+              </form>
+
+
+
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div>
+<%- contentFor('FooterJs') %>
+<script src="/public/assets/libs/parsleyjs/parsley.min.js"></script>
+<script src="/public/assets/libs/select2/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.custom-validation').parsley();
+
+        $("#teams").select2()
+    });
+</script>
+
+<%- contentFor('BottomJs') %>

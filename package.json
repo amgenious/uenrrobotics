@@ -1,0 +1,33 @@
+{
+  "name": "uenrrobotics",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "connect-session-firebase": "^5.13.0",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "cuid": "^2.1.8",
+    "debug": "~2.6.9",
+    "ejs": "~2.6.1",
+    "ejs-lint": "^1.2.2",
+    "express": "~4.16.1",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.17.3",
+    "express-validator": "^6.14.2",
+    "firebase": "^9.9.4",
+    "firebase-admin": "^11.0.1",
+    "formidable": "^2.0.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.19",
+    "sanitize-html": "^2.7.1"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.2"
+  }
+}

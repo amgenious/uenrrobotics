@@ -1,0 +1,125 @@
+<%- contentFor('HeaderCss') %>
+<link href="/public/assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+
+<%- contentFor('breadcrumb') %>
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Gallery</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Apps</a></li>
+                    <li class="breadcrumb-item active">Gallery</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<%- contentFor('body') %>
+<div class="row">
+
+    <div class="col-xl-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <div class="row">
+                        <div class="col-lg-12">
+
+                            <div class="mb-4">
+                                <% if(error.length> 0) { %>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="alert alert-danger text-center mb-4 flash" role="alert">
+                                                <%= error %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% } %>
+                                <% if(message.length> 0) { %>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="alert alert-success text-center mb-4 flash" role="alert">
+                                                <%= message %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div>
+                                <h5>URC Gallery</h5>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <a href="javasript:;" data-bs-toggle="modal" data-bs-target="#addGallery" class="btn btn-primary  waves-effect waves-light">Add Images</a>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <% for (var i = 0; i < gallery.length; i++) { %>
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="product-box">
+                                    <div class="product-img pt-4 px-4">
+                                        <div class="product-ribbon badge bg-danger">
+                                            <a href="/gallery/delete/<%=gallery[i].id%>/<%=gallery[i].filedData.name%>">
+                                                <i class="mdi mdi-trash-can text-white"></i> <span class="text-white">Delete</span>
+                                            </a>
+                                        </div>
+
+                                        <img src="<%=gallery[i].url%>" alt="" class="img-fluid mx-auto d-block">
+                                    </div>
+
+                                </div>
+                            </div>
+                        <% } if (gallery.length === 0) { %>
+                            <div class="col-xl-12 col-sm-12">
+                                <div class="product-box">
+                                    <h5 class="mb-1"><a href="javascript:;" class="text-dark">No gallery added</a></h5>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                    <!-- end row -->
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal fade" id="addGallery" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="addGalleryLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addGalleryLabel">Add Images</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <form method="post" action="/gallery" class="dropzone">
+                <div class="fallback">
+                    <input name="file" type="file" multiple="multiple">
+                </div>
+                <div class="dz-message needsclick">
+                    <div class="mb-3">
+                        <i class="display-4 text-muted uil uil-cloud-upload"></i>
+                    </div>
+
+                    <h4>Drop files here or click to upload.</h4>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<%- contentFor('FooterJs') %>
+<!-- apexcharts -->
+<script src="/public/assets/libs/dropzone/min/dropzone.min.js"></script>
+<%- contentFor('BottomJs') %>

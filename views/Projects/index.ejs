@@ -1,0 +1,149 @@
+<%- contentFor('HeaderCss') %>
+<!-- DataTables -->
+<link href="/public/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+<link href="/public/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+<!-- Responsive datatable examples -->
+<link href="/public/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+<%- contentFor('breadcrumb') %>
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Projects</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript:;">App</a></li>
+                    <li class="breadcrumb-item active">Projects</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+<%- contentFor('body') %>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between">
+                    <h4 class="card-title">Projects</h4>
+                    <div class="col-auto">
+                        <a href="/projects/add" class="btn btn-primary">Add Project</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="mb-4">
+                    <% if(error.length> 0) { %>
+                        <div class="alert alert-danger text-center mb-4 flash" role="alert">
+                            <%= error %>
+                        </div>
+                    <% } %>
+                    <% if(message.length> 0) { %>
+                        <div class="alert alert-success text-center mb-4 flash" role="alert">
+                            <%= message %>
+                        </div>
+                    <% } %>
+                </div>
+                <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Date</th>
+                        <th>Summary</th>
+                        <th>Demo</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% for(var i=0; i< projects.length; i++) { %>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0">
+                                        <img src="<%= projects[i].image %>" alt="" class="avatar-sm rounded-circle ">
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h5 class="text-truncate font-size-14 mb-1"><a href="/works/<%= projects[i].id %>" class="text-dark"><%= projects[i].title %></a></h5>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-column justify-content-start align-items-start">
+                                    <span>Start: <%= projects[i].start_date %></span>
+                                    <span>End: <%= projects[i].end_date %></span>
+                                </div>
+                            </td>
+                            <td>
+                                <p class="text-truncate mb-0"><%= projects[i].summary %></p>
+                            </td>
+                            <td>
+                               <!-- if demo link is not empty -->
+                                <% if(projects[i].link) { %>
+                                    <a href="<%= projects[i].link %>" target="_blank" class="btn btn-primary btn-sm">Demo</a>
+                                <% } else { %>
+                                    <span class="badge bg-info">No Demo Link</span>
+                                <% } %>
+                            </td>
+                            <td>
+                                <a href="/projects/edit/<%= projects[i].id %>" class="btn btn-primary btn-sm">Edit</a>
+                                <a href="/projects/delete/<%= projects[i].id %>" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                    <% } %>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->
+
+
+<%- contentFor('FooterJs') %>
+
+<!-- Required datatable js -->
+<script src="/public/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/public/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+
+<script src="public/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="public/assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+<script src="public/assets/libs/jszip/jszip.min.js"></script>
+<script src="public/assets/libs/pdfmake/build/pdfmake.min.js"></script>
+<script src="public/assets/libs/pdfmake/build/vfs_fonts.js"></script>
+<script src="public/assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="public/assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="public/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+
+<!-- Responsive examples -->
+<script src="public/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="public/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+
+        var table = $('#datatable').DataTable({
+            dom : 'Bfrtip',
+            lengthChange: false,
+            buttons: ['copy', 'excel', 'pdf', 'print'],
+            language: {
+                searchPlaceholder: 'Search projects...',
+                emptyTable: "No projects available",
+            },
+        });
+
+        table.buttons().container()
+            .appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
+
+        $(".dataTables_length select").addClass('form-select form-select-sm');
+    } );
+</script>
+
+<%- contentFor('BottomJs') %>

@@ -1,0 +1,104 @@
+<%- contentFor('HeaderCss') %>
+<%- contentFor('breadcrumb') %>
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Add Admin</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="/admins">Admins</a></li>
+                    <li class="breadcrumb-item active">Add Admin</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<%- contentFor('body') %>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+
+                <div class="d-flex justify-content-between">
+                    <h4 class="card-title">Admin Form</h4>
+                    <div class="col-auto">
+                        <a href="/admins" class="btn btn-primary">Admins</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-body">
+                <div class="mb-4">
+                    <% if(error.length> 0) { %>
+                        <div class="alert alert-danger text-center mb-4 flash" role="alert">
+                            <%= error %>
+                        </div>
+                    <% } %>
+                    <% if(message.length> 0) { %>
+                        <div class="alert alert-success text-center mb-4 flash" role="alert">
+                            <%= message %>
+                        </div>
+                    <% } %>
+                </div>
+                <form class="custom-validation" method="post">
+                    <div class="row">
+                        <div class="col-lg-5 ">
+                            <div class="row mb-4">
+                                <label for="name" class="col-sm-3 col-form-label">Name</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" name="displayName" placeholder="Admin Name" required class="form-control" id="name">
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <label for="phone" class="col-sm-3 col-form-label">Phone Number</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" data-parsley-length="[9,13]" data-parsley-type="tel" name="phoneNumber" placeholder="e.g +233xxxxxxx" required class="form-control" id="phone">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 ms-lg-auto">
+                            <div class="row mb-4">
+                                <label for="email" class="col-sm-3 col-form-label">Email </label>
+
+                                <div class="col-sm-9">
+                                    <input type="email" id="email" name="email" data-parsley-type="email" placeholder="Admin Email"  class="form-control" >
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <label for="password" class="col-sm-3 col-form-label">Password </label>
+
+                                <div class="col-sm-9">
+                                    <input type="password" id="password" name="password" required placeholder="**********"  class="form-control" >
+                                </div>
+                            </div>
+                            <div class="mb-3 d-flex justify-content-end">
+                                <button class="btn btn-primary" type="submit">Add Admin</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+
+
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div>
+<%- contentFor('FooterJs') %>
+<script src="/public/assets/libs/parsleyjs/parsley.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.custom-validation').parsley();
+
+    });
+</script>
+
+<%- contentFor('BottomJs') %>

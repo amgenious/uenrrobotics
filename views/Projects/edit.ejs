@@ -1,0 +1,234 @@
+<%- contentFor('HeaderCss') %>
+
+<link href="/public/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+<link href="/public/assets/libs/@chenfengyuan/datepicker/datepicker.min.css" rel="stylesheet" >
+<%- contentFor('breadcrumb') %>
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Edit Project</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">App</a></li>
+                    <li class="breadcrumb-item active">Edit Project</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<%- contentFor('body') %>
+<form class="custom-validation" method="post">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <h4 class="card-title">Editing <%= project.title %> </h4>
+                        <div class="col-auto">
+                            <a href="/projects" class="btn btn-primary">Projects</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+            <div class="mb-4">
+                <% if(error.length> 0) { %>
+                    <div class="alert alert-danger text-center mb-4 flash" role="alert">
+                        <%= error %>
+                    </div>
+                <% } %>
+                <% if(message.length> 0) { %>
+                        <div class="alert alert-success text-center mb-4 flash" role="alert">
+                            <%= message %>
+                        </div>
+                <% } %>
+            </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div id="addproject-accordion" class="custom-accordion">
+                <div class="card">
+                    <a href="#addproject-billinginfo-collapse" class="text-dark" data-bs-toggle="collapse" aria-expanded="true" aria-controls="addproject-billinginfo-collapse">
+                        <div class="p-4">
+
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                                    <div class="avatar-xs">
+                                        <div class="avatar-title rounded-circle bg-soft-primary text-primary">
+                                            01
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-1 overflow-hidden">
+                                    <h5 class="font-size-16 mb-1">Basic Info</h5>
+                                    <p class="text-muted text-truncate mb-0">Fill all information below</p>
+                                </div>
+                                <i class="mdi mdi-chevron-up accor-down-icon font-size-24"></i>
+                            </div>
+
+                        </div>
+                    </a>
+
+                    <div id="addproject-billinginfo-collapse" class="collapse show" data-bs-parent="#addproject-accordion">
+                        <div class="p-4 border-top">
+                            <div class="mb-3">
+                                <label class="form-label" for="projectname">Project Title</label>
+                                <input id="projectname" value="<%= project.title %>" required name="title" type="text" class="form-control">
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="categories">Categories <small>separate with comma</small></label>
+                                        <input id="categories" value="<%= project.categories %>" name="categories" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="tags">Tags <small>separate with comma</small> </label>
+                                        <input id="tags" name="tags"  value="<%= project.tags %>" type="text" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <label class="form-label">Project Date </label>
+                                    <div class="input-daterange input-group" id="datepicker6" data-date-format="dd M, yyyy" data-date-autoclose="true" data-provide="datepicker" data-date-container='#datepicker6'>
+                                        <input type="text"  value="<%= project.start_date %>" required class="form-control" name="start_date" placeholder="Start Date" />
+                                        <input type="text"  value="<%= project.end_date %>" required class="form-control" name="end_date" placeholder="End Date" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-0">
+                                <label class="form-label" for="projectsummary">Project Summary</label>
+                                <textarea class="form-control"  required id="projectsummary" maxlength="225" name="summary" rows="3"> <%= project.summary %> </textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <a href="#addproject-metadata-collapse" class="text-dark collapsed" data-bs-toggle="collapse" aria-haspopup="true" aria-expanded="false" aria-haspopup="true" aria-controls="addproject-metadata-collapse">
+                        <div class="p-4">
+
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                                    <div class="avatar-xs">
+                                        <div class="avatar-title rounded-circle bg-soft-primary text-primary">
+                                            02
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-1 overflow-hidden">
+                                    <h5 class="font-size-16 mb-1">Descriptions</h5>
+                                    <p class="text-muted text-truncate mb-0">Fill all information below</p>
+                                </div>
+                                <i class="mdi mdi-chevron-up accor-down-icon font-size-24"></i>
+                            </div>
+
+                        </div>
+                    </a>
+
+                    <div id="addproject-metadata-collapse" class="collapse" data-bs-parent="#addproject-accordion">
+                        <div class="p-4 border-top">
+
+                            <div class="form-group">
+                                <label class="form-label" for="abstract">Abstract</label>
+                                <textarea required class="form-control" name="abstract" id="abstract" rows="3"><%= project.abstract %></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="problem">Problem Statement</label>
+                                <textarea required class="form-control" name="statement" id="problem" rows="3"><%= project.statement %></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="aims">Aims and Objectives</label>
+                                <textarea required class="form-control" name="aims" id="aims" rows="3"><%= project.aims %></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="approach">Approach</label>
+                                <textarea required class="form-control" name="approach" id="approach" rows="3"><%= project.approach %></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="howitworks">How It Works</label>
+                                <textarea required class="form-control" name="howitworks" id="howitworks" rows="3"><%= project.howitworks %></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="techstack">Technologies Used</label>
+                                <textarea required class="form-control" name="techstack" id="techstack" rows="3"><%= project.techstack %></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <a href="#addproject-img-collapse" class="text-dark collapsed" data-bs-toggle="collapse" aria-expanded="false" aria-haspopup="true" aria-controls="addproject-img-collapse">
+                        <div class="p-4">
+
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                                    <div class="avatar-xs">
+                                        <div class="avatar-title rounded-circle bg-soft-primary text-primary">
+                                            03
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-1 overflow-hidden">
+                                    <h5 class="font-size-16 mb-1">Project Image & Demo Video Link</h5>
+                                    <p class="text-muted text-truncate mb-0">Fill all information below</p>
+                                </div>
+                                <i class="mdi mdi-chevron-up accor-down-icon font-size-24"></i>
+                            </div>
+
+                        </div>
+                    </a>
+
+                    <div id="addproject-img-collapse" class="collapse" data-bs-parent="#addproject-accordion">
+
+                        <div class="p-4 border-top">
+                            <div class="mb-3">
+                                <label class="form-label" for="link">Demo Video Link</label>
+                                <input id="link" data-parsley-type="url" value="<%= project.link %>" name="link" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+
+    <div class="row mb-4">
+        <div class="col text-end">
+            <button type="submit" class="btn btn-primary"> <i class="uil uil-file-alt me-1"></i> Update Project </button>
+        </div> <!-- end col -->
+    </div> <!-- end row-->
+</form>
+<%- contentFor('FooterJs') %>
+
+<script src="/public/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="/public/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+<script src="/public/assets/libs/@chenfengyuan/datepicker/datepicker.min.js"></script>
+
+<script src="/public/assets/libs/parsleyjs/parsley.min.js"></script>
+<script>
+    $('textarea#projectsummary').maxlength({
+        alwaysShow: true,
+        warningClass: "badge bg-info",
+        limitReachedClass: "badge bg-warning"
+    });
+
+    $('.custom-validation').parsley();
+
+
+</script>
+<%- contentFor('BottomJs') %>
