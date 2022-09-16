@@ -597,6 +597,24 @@ module.exports = function (app) {
         });
     });
 
+    app.post('/subscribe', function (req, res) {
+        // Subscribe
+        // validate email
+        if (!req.body.email) {
+            res.status(200).json({ status: 202 });
+            return;
+        }
+
+
+        const db = firebaseStore.getFirestore(firebase);
+        const subscriptionsRef = firebaseStore.collection(db, 'subscriptions');
+        firebaseStore.addDoc(subscriptionsRef, req.body).then(() => {
+           res.status(200).json({ status: 200 });
+        }).catch((error) => {
+            res.status(400).json({ status: 400 });
+        });
+    })
+
     app.get('/subscriptions/delete/:id', isUserAllowed, function (req, res) {
         // Delete subscription
         const db = firebaseStore.getFirestore(firebase);
@@ -702,5 +720,154 @@ module.exports = function (app) {
             res.redirect('/gallery');
         })
     });
+
+    app.get('/executives/current', isUserAllowed, function (req, res) {
+        // Get current executives
+        const db = firebaseStore.getFirestore(firebase);
+        const executivesRef = firebaseStore.collection(db, 'executives');
+        firebaseStore.getDocs(executivesRef).then((snapshot) => {
+            const executives = [];
+            snapshot.forEach((doc) => {
+                executives.push({
+                    ...doc.data(),
+                    id: doc.id
+                });
+            });
+            res.locals = { title: 'Current Executives', user: req.session.user, executives, 'message': req.flash('message'), 'error': req.flash('error') };
+            res.render('Executives/Current/index');
+
+        }).catch((error) => {
+            res.locals = { title: 'Current Executives', user: req.session.user, executives: [], 'message': req.flash('message'), 'error': req.flash('error') };
+            req.flash('error', error.message);
+            res.redirect('/executives/current');
+        });
+    });
+
+    app.get('/executives/past', isUserAllowed, function (req, res) {
+        // Get past executives
+        const db = firebaseStore.getFirestore(firebase);
+        const executivesRef = firebaseStore.collection(db, 'past_executives');
+        firebaseStore.getDocs(executivesRef).then((snapshot) => {
+            const executives = [];
+            snapshot.forEach((doc) => {
+                executives.push({
+                    ...doc.data(),
+                    id: doc.id
+                });
+            });
+            res.locals = { title: 'Past Executives', user: req.session.user, executives, 'message': req.flash('message'), 'error': req.flash('error') };
+            res.render('Executives/Past/index');
+
+        }).catch((error) => {
+            req.flash('error', error.message);
+            res.redirect('/executives/past');
+        });
+    })
+
+    app.get('/executives/add', isUserAllowed, function (req, res) {
+        res.locals = { title: 'Add Executive', user: req.session.user, 'message': req.flash('message'), 'error': req.flash('error') };
+        res.render('Executives/Current/add');
+    });
+
+    app.post('/executives/add', isUserAllowed, formHandler, async function (req, res) {
+        const image = await uploadFile( req.body.files.file.filepath, `executives/${req.body.files.file.newFilename}.${await req.body.files.file.originalFilename.split('.').pop()}`, true);
+
+        const db = firebaseStore.getFirestore(firebase);
+        const body = req.body.fields;
+        body.image = image;
+
+        const executivesRef = firebaseStore.collection(db, 'executives');
+        firebaseStore.addDoc(executivesRef, body).then(() => {
+            req.flash('message', 'Executive added successfully');
+            res.redirect('/executives/current')
+        }).catch((error) => {
+            req.flash('error', error.message);
+            res.redirect('/executives/add');
+        });
+    });
+
+    app.get('/executives/delete/:id/executives/:path', isUserAllowed, function (req, res) {
+        const db = firebaseStore.getFirestore(firebase);
+        const executivesRef = firebaseStore.collection(db, 'executives');
+        const executiveDoc = firebaseStore.doc(executivesRef, req.params.id);
+        firebaseStore.deleteDoc(executiveDoc).then(() => {
+            const storage = firebaseStorage.getStorage().bucket();
+            storage.file(`executives/${req.params.path}`).delete().then(() => {
+                req.flash('message', 'Executive deleted successfully');
+                res.redirect('/executives/current');
+            }).catch((error) => {
+                req.flash('error', error.message);
+                res.redirect('/executives/current');
+            })
+        }).catch((error) => {
+            req.flash('error', error.message);
+            res.redirect('/executives/current');
+        })
+    });
+
+    // move to past executives
+    app.get('/executives/move/:id', isUserAllowed, function (req, res) {
+        const db = firebaseStore.getFirestore(firebase);
+        const executivesRef = firebaseStore.collection(db, 'executives');
+        const executiveDoc = firebaseStore.doc(executivesRef, req.params.id);
+        firebaseStore.getDoc(executiveDoc).then((doc) => {
+            const pastExecutivesRef = firebaseStore.collection(db, 'past_executives');
+            firebaseStore.addDoc(pastExecutivesRef, doc.data()).then(() => {
+                firebaseStore.deleteDoc(executiveDoc).then(() => {
+                    req.flash('message', 'Executive moved successfully');
+                    res.redirect('/executives/current');
+                }).catch((error) => {
+                    req.flash('error', error.message);
+                    res.redirect('/executives/current');
+                })
+            }).catch((error) => {
+                req.flash('error', error.message);
+                res.redirect('/executives/current');
+            })
+        }).catch((error) => {
+            req.flash('error', error.message);
+            res.redirect('/executives/current');
+        })
+    });
+
+    app.get('/executives/past/add', isUserAllowed, function (req, res) {
+        res.locals = { title: 'Add Past Executive', user: req.session.user, 'message': req.flash('message'), 'error': req.flash('error') };
+        res.render('Executives/Past/add');
+    });
+
+    app.post('/executives/past/add', isUserAllowed, formHandler, async function (req, res) {
+        const image = await uploadFile( req.body.files.file.filepath, `executives/${req.body.files.file.newFilename}.${await req.body.files.file.originalFilename.split('.').pop()}`, true);
+        const db = firebaseStore.getFirestore(firebase);
+        const body = req.body.fields;
+        body.image = image;
+        const executivesRef = firebaseStore.collection(db, 'past_executives');
+        firebaseStore.addDoc(executivesRef, body).then(() => {
+            req.flash('message', 'Past Executive added successfully');
+            res.redirect('/executives/past');
+        }).catch((error) => {
+            req.flash('error', error.message);
+            res.redirect('/executives/past/add');
+        });
+    });
+
+    app.get('/executives/past/delete/:id/executives/:path', isUserAllowed, function (req, res) {
+        const db = firebaseStore.getFirestore(firebase);
+        const executivesRef = firebaseStore.collection(db, 'past_executives');
+        const executiveDoc = firebaseStore.doc(executivesRef, req.params.id);
+        firebaseStore.deleteDoc(executiveDoc).then(() => {
+            const storage = firebaseStorage.getStorage().bucket();
+            storage.file(`executives/${req.params.path}`).delete().then(() => {
+                req.flash('message', 'Past Executive deleted successfully');
+                res.redirect('/executives/past');
+            }).catch((error) => {
+                req.flash('error', error.message);
+                res.redirect('/executives/past');
+            })
+        }).catch((error) => {
+            req.flash('error', error.message);
+            res.redirect('/executives/past');
+        })
+    });
+
 
 }

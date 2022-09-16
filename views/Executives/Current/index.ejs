@@ -1,0 +1,89 @@
+<%- contentFor('HeaderCss') %>
+
+<%- contentFor('breadcrumb') %>
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Current Executives</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Executives</a></li>
+                    <li class="breadcrumb-item active">Current Executives</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<%- contentFor('body') %>
+
+<div class="row">
+    <div class="row mb-2">
+        <div class="col-md-12 text-end">
+            <div class="mb-3">
+                <a href="/executives/add" class="btn btn-outline-primary waves-effect waves-light"><i class="mdi mdi-plus me-2"></i> Add Executive</a>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <% if(error.length> 0) { %>
+            <div class="alert alert-danger text-center mb-4 flash" role="alert">
+                <%= error %>
+            </div>
+        <% } %>
+        <% if(message.length> 0) { %>
+            <div class="alert alert-success text-center mb-4 flash" role="alert">
+                <%= message %>
+            </div>
+        <% } %>
+    </div>
+    <!-- loop through executives -->
+    <% for (let i = 0; i < executives.length; i++) { %>
+        <div class="col-xl-3 col-sm-6">
+            <div class="card text-center">
+                <div class="card-body">
+                    <div class="dropdown float-end">
+                        <a class="text-body dropdown-toggle font-size-16" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
+                            <i class="uil uil-ellipsis-h"></i>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a class="dropdown-item" href="/executives/move/<%=executives[i].id %>">Move To Past Executive</a>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="mb-4">
+                        <img src="<%=executives[i].image.url %>" alt="" class="avatar-lg rounded-circle img-thumbnail">
+                    </div>
+                    <h5 class="font-size-16 mb-1"><a href="#" class="text-dark"><%=executives[i].name %></a></h5>
+                    <p class="text-muted mb-2"><%=executives[i].position %></p>
+                    <small class="text-muted mb-2"><%=executives[i].year %></small>
+
+                </div>
+
+                <div class="btn-group" role="group">
+                    <a href="/executives/delete/<%=executives[i].id %>/<%=executives[i].image.filedData.name %>" class="btn btn-outline-danger text-truncate"><i class="uil uil-trash me-1"></i> Delete Profile</a>
+                </div>
+            </div>
+        </div>
+    <% } if (executives.length === 0) { %>
+        <div class="col-xl-12 col-sm-12">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="font-size-16 mb-1">No Current Executives Found</h5>
+                </div>
+            </div>
+        </div>
+    <% } %>
+</div>
+
+<!-- end row -->
+
+<%- contentFor('FooterJs') %>
+
+<%- contentFor('BottomJs') %>

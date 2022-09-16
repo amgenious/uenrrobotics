@@ -10,22 +10,21 @@
                         <li>
                             <span class="icon pe-7s-map-marker"></span>
                             <div class="cont">
-                                <h6>UENR</h6>
-                                <p>Fiapre Sunyani</p>
+                                <%=settings.location %>
                             </div>
                         </li>
                         <li>
                             <span class="icon pe-7s-mail"></span>
                             <div class="cont">
                                 <h6>Email Us</h6>
-                                <p>support@urc.com</p>
+                                <%=settings.email %>
                             </div>
                         </li>
                         <li>
                             <span class="icon pe-7s-call"></span>
                             <div class="cont">
                                 <h6>Call Us</h6>
-                                <p>+233553872291</p>
+                                <%=settings.phone %>
                             </div>
                         </li>
                     </ul>
@@ -39,8 +38,14 @@
                     <ul>
                         <li>
                             <div class="subscribe">
-                                <input type="text" placeholder="Type Your Email">
-                                <span class="subs pe-7s-paper-plane"></span>
+                                <form id="sub-form">
+                                    <input type="email" required id="email" name="email" placeholder="Type Your Email">
+                                    <button type="submit" class="subs pe-7s-paper-plane"></button>
+                                    <small class="form-text processing d-none text-info"> Processing...</small>
+                                    <small class="form-text success d-none text-success"> You have successfully subscribed to our newsletter.</small>
+                                    <small class="form-text error d-none text-danger"> Please enter a valid email address.</small>
+                                    <small class="form-text unknown d-none text-danger"> An error occurred. Please retry.</small>
+                                </form>
                             </div>
                         </li>
                     </ul>
@@ -52,13 +57,13 @@
 
                     </div>
                     <div class="social">
-                        <a href="#0"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#0"><i class="fab fa-twitter"></i></a>
-                        <a href="#0"><i class="fab fa-instagram"></i></a>
-                        <a href="#0"><i class="fab fa-youtube"></i></a>
+                        <a href="<%=settings.facebook %>" ><i class="fab fa-facebook-f"></i></a>
+                        <a href="<%=settings.twitter %>"><i class="fab fa-twitter"></i></a>
+                        <a href="<%=settings.instagram %>"><i class="fab fa-instagram"></i></a>
+                        <a href="<%=settings.linkedin %>"><i class="fab fa-youtube"></i></a>
                     </div>
                     <div class="copy-right">
-                        <p>© 2022, URC. Made with passion by <a href="#0">URC</a>.</p>
+                        <p>©    <script>document.write(new Date().getFullYear())</script>, URC. Made with passion by <a href="https://pennycodes.dev" target="_blank">Wan Peninsula</a>.</p>
                     </div>
                 </div>
             </div>
@@ -80,3 +85,45 @@
 
 <!-- custom scripts -->
 <script src="public/js/scripts.js"></script>
+<script>
+
+    $("#sub-form").submit(function (e) {
+        e.preventDefault();
+        var email = $("#email").val();
+        $.ajax({
+            url: '/subscribe',
+            type: 'POST',
+            data: { email },
+            dataType: 'json',
+            cache: false,
+            processData: true,
+            beforeSend: function () {
+                $('small.processing').removeClass('d-none');
+                $('small.success').addClass('d-none');
+                $('small.error').addClass('d-none');
+                $('small.unknown').addClass('d-none');
+
+            },
+            success: function (data) {
+                if (data.status === 200) {
+                    $('small.processing').addClass('d-none');
+                    $('small.success').removeClass('d-none');
+                    $('small.error').addClass('d-none');
+                    $('small.unknown').addClass('d-none');
+                } else {
+                    $('small.processing').addClass('d-none');
+                    $('small.success').addClass('d-none');
+                    $('small.error').removeClass('d-none');
+                }
+                $("#email").val('');
+            },
+            error: function (err) {
+                $('small.processing').addClass('d-none');
+                $('small.success').addClass('d-none');
+                $('small.error').addClass('d-none');
+                $('small.unknown').removeClass('d-none');
+            }
+
+        })
+    });
+</script>

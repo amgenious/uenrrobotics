@@ -6,15 +6,43 @@
  */
 const express = require('express');
 const firebaseAuth = require('firebase/auth');
-const { auth } = require('../handlers/firebase');
+const { auth, firebase } = require('../handlers/firebase');
+const firebaseStore = require('firebase/firestore');
 
 module.exports = function (app) {
     app.use(express.json())
     app.use(express.urlencoded({ extended: false }))
 
     app.get('/', function (req, res) {
-        res.locals = { title: 'Home' };
-        res.render('index');
+        const db = firebaseStore.getFirestore(firebase);
+        const membersRef = firebaseStore.collection(db, 'members');
+        const projectsRef = firebaseStore.collection(db, 'projects');
+        const awardsRef = firebaseStore.collection(db, 'awards');
+        const settingsRef = firebaseStore.collection(db, 'settings');
+
+        const members = firebaseStore.getDocs(membersRef);
+        const projects = firebaseStore.getDocs(projectsRef);
+        const awards = firebaseStore.getDocs(awardsRef);
+        const settingRef = firebaseStore.doc(settingsRef, "settings");
+        const settings = firebaseStore.getDoc(settingRef);
+        Promise.all([members, projects, awards, settings]).then((values) => {
+
+            const siteSettings = values[3].data();
+            values = values.map((value) => value.size);
+
+            res.locals = { title: 'Home',
+                members: values[0],
+                projects: values[1],
+                awards: values[2],
+                settings: siteSettings
+            };
+            res.render('index');
+
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).send('Internal Server Error');
+        })
+
     });
 
 
