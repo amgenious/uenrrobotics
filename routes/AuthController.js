@@ -165,6 +165,35 @@ module.exports = function (app) {
         });
     });
 
+    app.get('/contact', function (req, res) {
+        // Get settings
+        const db = firebaseStore.getFirestore(firebase);
+        const settingsRef = firebaseStore.collection(db, 'settings');
+        const settingRef = firebaseStore.doc(settingsRef, "settings");
+        firebaseStore.getDoc(settingRef).then((snapshot) => {
+            let settings = {};
+            if (snapshot.exists()) {
+                settings = snapshot.data();
+            }
+            res.locals = { title: 'Contact | UENR Robotics Club', settings};
+            res.render('contact');
+
+        }).catch((error) => {
+            console.log(error);
+            res.status(500).send('Internal Server Error');
+        });
+    });
+
+    app.post('/contact', function (req, res) {
+        const db = firebaseStore.getFirestore(firebase);
+        const contactsRef = firebaseStore.collection(db, 'contacts');
+        firebaseStore.addDoc(contactsRef, req.body).then((snapshot) => {
+            res.status(200).json({status: 200});
+        }).catch((error) => {
+            console.log(error);
+            res.status(400).json({status: 400});
+        });
+    });
 
 
     app.get('/login', function (req, res) {
@@ -191,6 +220,22 @@ module.exports = function (app) {
                 req.flash('error', errorMessage);
                 res.redirect('/login');
             })
+    });
+
+    app.get('/register', function (req, res) {
+        res.locals = { title: 'Join Us | UENR Robotics Club'};
+        res.render('register');
+    });
+
+    app.post('/register', function (req, res) {
+        const db = firebaseStore.getFirestore(firebase);
+        const membershipsRef = firebaseStore.collection(db, 'requests');
+        firebaseStore.addDoc(membershipsRef, req.body).then((snapshot) => {
+            res.status(200).json({status: 200});
+        }).catch((error) => {
+            console.log(error);
+            res.status(400).json({status: 400});
+        });
     });
 
     app.get('/forgot-password', function (req, res) {

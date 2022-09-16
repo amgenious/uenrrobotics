@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<%- include('Partials/HeaderFront'); -%>
+<body>
+<%- include('Partials/loader'); -%>
+<%- include('Partials/menu-dark'); -%>
+<header class="pages-header circle-bg valign position-re sub-bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9 col-md-11">
+                <div class="capt">
+                    <div class="text-center">
+                        <h1 class="color-font mb-10 fw-700">Join Us <br> </h1>
+                        <p>Be a part of the family. Fill out the form below</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="circle-color">
+        <div class="gradient-circle"></div>
+        <div class="gradient-circle two"></div>
+    </div>
+</header>
+<div class="main-content">
+
+    <section class="contact section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <div class="form md-mb50">
+
+                        <h4 class="fw-700 color-font mb-50">Register to join Us.</h4>
+
+                        <form id="register-form" method="post" >
+
+
+                            <div class="controls">
+
+                                <div class="form-group">
+                                    <input id="form_name" type="text" class="text-dark " name="name" placeholder="Name"
+                                           required="required">
+                                </div>
+                                <div class="form-group">
+                                    <input data-parsley-type="number" type="number" class="text-dark" name="phone" placeholder="Phone"
+                                           required="required">
+                                </div>
+
+                                <div class="form-group">
+                                    <input id="form_email" data-parsley-type="email" class="text-dark" type="email" name="email" placeholder="Email"
+                                           required="required">
+                                </div>
+                                <div class="form-group">
+                                    <input data-parsley-type="digits" type="number" class="text-dark" name="level" placeholder="Level"
+                                           required="required">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="text-dark" name="program" placeholder="Program of study"
+                                           required="required">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="teams">Select Preferred Team</label>
+                                    <select class="form-control" required name="team" id="teams">
+                                        <option value="" >Select Team</option>
+                                        <option value="Software Team">Software Team</option>
+                                        <option value="3D Modelling Team">3D Modelling Team</option>
+                                        <option value="Hardware & Prototyping Team">Hardware & Prototyping Team</option>
+                                        <option value="Research & Pitching Team">Research & Pitching Team</option>
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                        <textarea id="form_message" class="text-dark" name="reason" placeholder="Reason for joining us" rows="4"
+                                                  required="required"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <small class="form-text success d-none text-success"> Your request has been sent successfully. We will get in touch.</small>
+                                    <small class="form-text error d-none text-danger"> Some fields are empty. check and retry.</small>
+                                    <small class="form-text unknown d-none text-danger"> An error occurred. Please retry.</small>
+                                </div>
+                                <button type="submit" id="register-button" class="butn dark"><span>Send Request</span></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <%- include('Partials/FooterFront'); -%>
+    <script src="/public/assets/libs/parsleyjs/parsley.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#register-form').parsley();
+
+            $("#register-form").submit(function (e) {
+                e.preventDefault();
+                const form = $("#register-form");
+                $.ajax({
+                    url: '/register',
+                    type: 'POST',
+                    data: form.serialize(),
+                    dataType: 'json',
+                    cache: false,
+                    processData: false,
+                    beforeSend: function () {
+                        $("#register-button").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...').attr('disabled', true);
+                        $('small.success').addClass('d-none');
+                        $('small.error').addClass('d-none');
+                        $('small.unknown').addClass('d-none');
+
+                    },
+                    success: function (data) {
+                        if (data.status === 200) {
+                            $("#register-button").html('<span>Send Request</span>').attr('disabled', false);
+                            form.trigger("reset");
+                            $('small.success').removeClass('d-none');
+                            $('small.error').addClass('d-none');
+                            $('small.unknown').addClass('d-none');
+                        } else {
+                            $("#register-button").html('<span>Send Request</span>').attr('disabled', false);
+                            $('small.success').addClass('d-none');
+                            $('small.unknown').addClass('d-none');
+                            $('small.error').removeClass('d-none');
+                        }
+                    },
+                    error: function (err) {
+                        $("#register-button").html('<span>Send Request</span>').attr('disabled', false);
+                        $('small.success').addClass('d-none');
+                        $('small.error').addClass('d-none');
+                        $('small.unknown').removeClass('d-none');
+                    }
+
+                })
+            });
+
+        });
+    </script>
+</div>
+</body>
+</html>
