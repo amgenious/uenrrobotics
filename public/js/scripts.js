@@ -30,12 +30,12 @@ $(function () {
         if (bodyScroll > 300) {
 
             navbar.addClass("nav-scroll");
-            logo.attr('src', 'public/images/urc_logo.png');
+            logo.attr('src', '/public/images/urc_logo.png');
 
         } else {
 
             navbar.removeClass("nav-scroll");
-            logo.attr('src', 'public/images/urc_logo.png');
+            logo.attr('src', '/public/images/urc_logo.png');
         }
     });
 
@@ -83,7 +83,7 @@ $(function () {
             $('.topnav .menu-icon .text').addClass('open');
 
             navDark.addClass("navlit");
-            logoChan.attr('src', 'img/logo-light.png');
+            logoChan.attr('src', '/public/images/urc_logo.png');
 
             window.addEventListener('scroll', noScroll);
 
@@ -94,7 +94,7 @@ $(function () {
             $('.topnav .menu-icon .text').removeClass('open');
 
             navDark.removeClass("navlit");
-            logoChan.attr('src', 'img/logo-dark.png');
+            logoChan.attr('src', '/public/images/urc_logo.png');
 
             window.removeEventListener('scroll', noScroll);
         }

@@ -45,6 +45,75 @@ module.exports = function (app) {
 
     });
 
+    app.get('/works', function (req, res) {
+        const db = firebaseStore.getFirestore(firebase);
+        const projectsRef = firebaseStore.collection(db, 'projects');
+        firebaseStore.getDocs(projectsRef).then(snapshot => {
+
+            const projects = [];
+            snapshot.forEach(doc => {
+                projects.push({
+                    ...doc.data(),
+                    id: doc.id,
+                });
+            });
+            res.locals = { title: 'Projects | UENR Robotics Club', projects };
+            res.render('works');
+
+        })
+            .catch((err) => {
+            console.log(err);
+            res.status(500).send('Internal Server Error');
+        })
+    });
+
+    app.get('/works/:id', function (req, res) {
+        const db = firebaseStore.getFirestore(firebase);
+        const projectsRef = firebaseStore.collection(db, 'projects');
+        const projectRef = firebaseStore.doc(projectsRef, req.params.id);
+        firebaseStore.getDoc(projectRef).then(doc => {
+            if (!doc.exists) {
+                res.status(404).send('Not Found');
+            } else {
+                const project = doc.data();
+                res.locals = { title: `${project.title} | UENR Robotics Club`, project };
+                res.render('work');
+            }
+        })
+            .catch((err) => {
+            console.log(err);
+            res.status(500).send('Internal Server Error');
+        })
+    });
+
+    app.get('/images', function (req, res) {
+        const db = firebaseStore.getFirestore(firebase);
+        const galleryRef = firebaseStore.collection(db, 'gallery');
+        const settingsRef = firebaseStore.collection(db, 'settings');
+
+        const gallery = firebaseStore.getDocs(galleryRef);
+        const settingRef = firebaseStore.doc(settingsRef, "settings");
+        const settings = firebaseStore.getDoc(settingRef);
+        Promise.all([gallery, settings]).then((values) => {
+            const siteSettings = values[1].data();
+            const images = [];
+            values[0].forEach((doc) => {
+                images.push(doc.data());
+            });
+
+            res.locals = { title: 'Gallery | UENR Robotics Club',
+                gallery: images,
+                settings: siteSettings
+            };
+            res.render('gallery');
+
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).send('Internal Server Error');
+        })
+
+    })
+
 
     app.get('/login', function (req, res) {
         res.render('Auth/auth-login', { 'message': req.flash('message'), 'error': req.flash('error') });

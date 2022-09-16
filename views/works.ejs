@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<%- include('Partials/HeaderFront'); -%>
+<body>
+<%- include('Partials/loader'); -%>
+<%- include('Partials/menu-dark'); -%>
+<div class="circle-bg">
+    <div class="circle-color fixed">
+        <div class="gradient-circle"></div>
+        <div class="gradient-circle two"></div>
+    </div>
+</div>
+<header class="works-header fixed-slider hfixd valign sub-bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-9 static">
+                <div class="capt mt-50">
+                    <div class="parlx text-center">
+                        <h1 class="color-font">amazing works</h1>
+                        <p>Creativity involves breaking out of expected & repeatable patterns in order to look at
+                            things in different way than ever before.</p>
+                    </div>
+
+                    <div class="bactxt custom-font valign">
+                        <span class="full-width">Works</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="main-content">
+    <section class="portfolio three-column section-padding pb-70">
+        <div class="container">
+            <div class="row">
+                <!-- gallery -->
+                <div class="gallery full-width">
+
+                    <!-- gallery item -->
+                  <% for (var i = 0; i < projects.length; i++) { %>
+                        <div class="col-lg-4 col-md-6 items ">
+                            <div class="item-img wow fadeInUp" data-wow-delay=".4s">
+                                <a href="/works/<%= projects[i].id %>">
+                                    <img src="<%= projects[i].image %>" alt="<%= projects[i].title %>">
+
+                                </a>
+                            </div>
+                            <div class="cont">
+                                <h6><%= projects[i].title %></h6>
+                                <span><%= projects[i].categories %></span>
+                            </div>
+                            <p><%= projects[i].summary %></p>
+                        </div>
+                    <% } %>
+                    <!-- gallery item -->
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <%- include('Partials/FooterFront'); -%>
+</div>
+</body>
+</html>

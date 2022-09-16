@@ -1,0 +1,74 @@
+<div id="navi" class="topnav light">
+    <div class="container-fluid">
+        <div class="logo">
+            <a href="/"><img src="/public/images/urc_logo.png" alt="logo"></a>
+        </div>
+        <div class="menu-icon">
+                <span class="icon">
+                    <i></i>
+                    <i></i>
+                </span>
+            <span class="text" data-splitting>Menu</span>
+        </div>
+    </div>
+</div>
+
+<div class="hamenu">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 col-md-8">
+                <div class="menu-links">
+                    <ul class="main-menu">
+                        <li>
+                            <div class="o-hidden">
+                                <a href="/" class="link"><span class="nm">01.</span>Home</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="o-hidden">
+                                <a href="/works" class="link"><span class="nm">02.</span>Projects</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="o-hidden">
+                                <a href="/images" class="link"><span class="nm">03.</span>Gallery</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="o-hidden">
+                                <a href="/positions" class="link"><span class="nm">04.</span>Executives</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="o-hidden">
+                                <a href="/about" class="link"><span class="nm">05.</span>About</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="o-hidden">
+                                <a href="/contact" class="link"><span class="nm">06.</span>Contact</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <div class="cont-info">
+                    <div class="item">
+                        <h6>Phone :</h6>
+                        <p> <%=settings.phone %></p>
+                    </div>
+                    <div class="item">
+                        <h6>Address :</h6>
+                        <p> <%=settings.location %></p>
+                    </div>
+                    <div class="item">
+                        <h6>Email :</h6>
+                        <p><a href="mailto:<%=settings.email %>"><%=settings.email %></a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

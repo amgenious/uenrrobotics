@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<%- include('Partials/HeaderFront'); -%>
+<body>
+<%- include('Partials/loader'); -%>
+<%- include('Partials/gallery'); -%>
+<header class="slider circle-slide showcase-carus" data-carousel="swiper" data-items="2" data-speed="1000"
+        data-loop="true" data-space="200" data-parallax="true" data-mousewheel="true" data-center="true">
+    <div id="content-carousel-container-unq-1" class="swiper-container" data-swiper="container">
+        <div class="swiper-wrapper">
+            <% for (var i = 0; i < gallery.length; i++) { %>
+            <div class="swiper-slide">
+                <div class="full-width">
+                    <div class="bg-img valign" data-background="<%=gallery[i].url%>" data-overlay-dark="1">
+                        <div class="caption ontop valign">
+                            <div class="o-hidden">
+                                <h1 data-swiper-parallax="-2000">
+
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="copy-cap valign">
+                            <div class="cap">
+                                <h1 data-swiper-parallax="-2000">
+
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+
+        <!-- slider setting -->
+        <div class="txt-botm">
+            <div class="swiper-button-next swiper-nav-ctrl next-ctrl cursor-pointer">
+                <div>
+                    <span>Next Slide</span>
+                </div>
+                <div><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="swiper-button-prev swiper-nav-ctrl prev-ctrl cursor-pointer">
+                <div><i class="fas fa-chevron-left"></i></div>
+                <div>
+                    <span>Prev Slide</span>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination steps"></div>
+    </div>
+</header>
+<script src="/public/js/jquery-3.0.0.min.js"></script>
+<script src="/public/js/jquery-migrate-3.0.0.min.js"></script>
+
+<!-- plugins -->
+<script src="/public/js/plugins.js"></script>
+
+<!-- custom scripts -->
+<script src="/public/js/scripts.js"></script>
+</body>
+</html>

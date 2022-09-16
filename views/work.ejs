@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<%- include('Partials/HeaderFront'); -%>
+<body>
+<%- include('Partials/loader'); -%>
+<%- include('Partials/menu'); -%>
+
+<div class="wrapper">
+    <section class="page-header proj-det bg-img parallaxie valign" data-background="<%=project.image%>"
+             data-overlay-dark="4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 col-md-9">
+                    <div class="cont">
+                        <h2><%=project.title%></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="item mt-30">
+                        <h6>Start Date</h6>
+                        <p><a href="#0"><%=project.start_date%></a></p>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="item mt-30">
+                        <h6>End Date</h6>
+                        <p><%=project.end_date%></p>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="item mt-30">
+                        <h6>Categories</h6>
+                        <p><a href="#0"><%=project.categories%></a></p>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="item mt-30">
+                        <h6>Tags</h6>
+                        <p><a href="#0"><%=project.tags%></a> </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="intro-section section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-4">
+                    <div class="htit">
+                        <h4><span>01 </span> Abstract</h4>
+                    </div>
+                </div>
+                <div class="col-lg-8 offset-lg-1 col-md-8">
+                    <div class="text js-scroll__content">
+                        <p><%=project.abstract%></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="intro-section section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-4">
+                    <div class="htit">
+                        <h4><span>02 </span> Problem Statement</h4>
+                    </div>
+                </div>
+                <div class="col-lg-8 offset-lg-1 col-md-8">
+                    <div class="text js-scroll__content">
+                        <p><%=project.statement%></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="intro-section section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-4">
+                    <div class="htit">
+                        <h4><span>03 </span> Aims/Objectives</h4>
+                    </div>
+                </div>
+                <div class="col-lg-8 offset-lg-1 col-md-8">
+                    <div class="text js-scroll__content">
+                        <p><%=project.aims%></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="intro-section section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-4">
+                    <div class="htit">
+                        <h4><span>04 </span> Approach</h4>
+                    </div>
+                </div>
+                <div class="col-lg-8 offset-lg-1 col-md-8">
+                    <div class="text js-scroll__content">
+                        <p><%=project.approach%></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="intro-section section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-4">
+                    <div class="htit">
+                        <h4><span>05 </span> How It Works</h4>
+                    </div>
+                </div>
+                <div class="col-lg-8 offset-lg-1 col-md-8">
+                    <div class="text js-scroll__content">
+                        <p><%=project.howitworks%></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="intro-section section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-4">
+                    <div class="htit">
+                        <h4><span>06 </span> Technologies used</h4>
+                    </div>
+                </div>
+                <div class="col-lg-8 offset-lg-1 col-md-8">
+                    <div class="text js-scroll__content">
+                        <p><%=project.techstack%></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container-fluid">
+            <div class="video-wrapper section-padding bg-img parallaxie valign"
+                 data-background="<%=project.image%>" data-overlay-dark="4">
+                <div class="full-width text-center">
+                    <a class="vid" href="<%=project.link%>">
+                        <div class="vid-butn">
+                                <span class="icon">
+                                    <i class="fas fa-play"></i>
+                                </span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="next-prog section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="box">
+                        <div class="bg-img valign" data-background="<%=project.image%>"
+                             data-overlay-dark="4">
+                            <div class="caption ontop valign">
+                                <div class="o-hidden full-width">
+                                    <h1>
+                                        <a href="#">
+                                            <div class="stroke"><%=project.title%></div>
+                                        </a>
+                                    </h1>
+                                </div>
+                            </div>
+                            <div class="copy-cap valign">
+                                <div class="cap full-width">
+                                    <h1>
+                                        <a href="#">
+                                            <span><%=project.title%></span>
+                                        </a>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <%- include('Partials/FooterFront'); -%>
+</div>
+</body>
+</html>
