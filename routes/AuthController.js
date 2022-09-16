@@ -114,6 +114,58 @@ module.exports = function (app) {
 
     })
 
+    app.get('/positions', function (req, res) {
+        const db = firebaseStore.getFirestore(firebase);
+        const currentExecutivesRef = firebaseStore.collection(db, 'executives');
+        const pastExecutivesRef = firebaseStore.collection(db, 'past_executives');
+
+        const currentExecutives = firebaseStore.getDocs(currentExecutivesRef);
+        const pastExecutives = firebaseStore.getDocs(pastExecutivesRef);
+
+        Promise.all([currentExecutives, pastExecutives]).then((values) => {
+
+            const current = [];
+            values[0].forEach((doc) => {
+                current.push(doc.data());
+            });
+            const past = [];
+            values[1].forEach((doc) => {
+                past.push(doc.data());
+            });
+
+            res.locals = { title: 'Executives | UENR Robotics Club',
+               current,
+                past
+            };
+            res.render('positions');
+
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).send('Internal Server Error');
+        })
+
+    })
+
+    app.get('/about', function (req, res) {
+        // Get settings
+        const db = firebaseStore.getFirestore(firebase);
+        const settingsRef = firebaseStore.collection(db, 'settings');
+        const settingRef = firebaseStore.doc(settingsRef, "settings");
+        firebaseStore.getDoc(settingRef).then((snapshot) => {
+            let settings = {};
+            if (snapshot.exists()) {
+                settings = snapshot.data();
+            }
+            res.locals = { title: 'About | UENR Robotics Club', settings};
+            res.render('about');
+
+        }).catch((error) => {
+            console.log(error);
+            res.status(500).send('Internal Server Error');
+        });
+    });
+
+
 
     app.get('/login', function (req, res) {
         res.render('Auth/auth-login', { 'message': req.flash('message'), 'error': req.flash('error') });

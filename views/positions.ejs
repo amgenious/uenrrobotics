@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<%- include('Partials/HeaderFront'); -%>
+<body>
+<%- include('Partials/loader'); -%>
+<%- include('Partials/menu-dark'); -%>
+<div class="circle-bg">
+    <div class="circle-color fixed">
+        <div class="gradient-circle"></div>
+        <div class="gradient-circle two"></div>
+    </div>
+</div>
+<header class="works-header fixed-slider hfixd valign sub-bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-9 static">
+                <div class="capt mt-50">
+                    <div class="parlx text-center">
+                        <h1 class="color-font">Our Executives</h1>
+                        <p>Our dedicated team of creatives is bursting with talent,
+                            experience and passion for what we do</p>
+                    </div>
+
+                    <div class="bactxt custom-font valign">
+                        <span class="full-width">Executives</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="main-content">
+    <section class="services bords lficon section-padding">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-10">
+                    <div class="sec-head  text-center">
+                        <h6 class="wow fadeIn" data-wow-delay=".5s">Current Executives</h6>
+                        <h3 class="wow color-font">We are your current executives</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- gallery -->
+
+
+                    <!-- gallery item -->
+                    <% for (var i = 0; i < current.length; i++) { %>
+                <div class="col-sm-6 col-lg-4">
+                        <div class="full-width">
+                            <div class="img sizxl mb-30" data-tooltip-tit="<%= current[i].name %>"
+                                 data-tooltip-sub="<%= current[i].position %>">
+                                <img src="<%= current[i].image.url %>" alt="" class="<%= current[i].name %><%= current[i].name %>">
+                            </div>
+                        </div>
+                </div>
+                    <% } %>
+                    <!-- gallery item -->
+
+
+
+
+            </div>
+        </div>
+    </section>
+    <section class="services bords lficon section-padding">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-10">
+                    <div class="sec-head  text-center">
+                        <h6 class="wow fadeIn" data-wow-delay=".5s">Past Executives</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- gallery -->
+
+
+                    <!-- gallery item -->
+                    <% for (var i = 0; i < past.length; i++) { %>
+                <div class="col-sm-6 col-lg-4">
+                        <div class="full-width">
+                            <div class="img sizxl mb-30" data-tooltip-tit="<%= past[i].name %>"
+                                 data-tooltip-sub="<%= past[i].position %>">
+                                <img src="<%= past[i].image.url %>" alt="" class="<%= past[i].name %><%= past[i].name %>">
+                            </div>
+                        </div>
+                </div>
+                    <% } %>
+                    <!-- gallery item -->
+
+
+
+
+
+            </div>
+        </div>
+    </section>
+    <%- include('Partials/FooterFront'); -%>
+</div>
+</body>
+</html>

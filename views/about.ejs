@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<%- include('Partials/HeaderFront'); -%>
+<body>
+<%- include('Partials/loader'); -%>
+<%- include('Partials/menu-dark'); -%>
+<div class="circle-bg">
+    <div class="circle-color fixed">
+        <div class="gradient-circle"></div>
+        <div class="gradient-circle two"></div>
+    </div>
+</div>
+<header class="pages-header circle-bg valign">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="cont mt-100 mb-50 text-center">
+                    <h1 class="color-font fw-700">Our dedicated team of creatives is bursting with talent,
+                        experience and passion for what we do.</h1>
+                </div>
+            </div>
+            <div class="col-lg-10">
+                <div class="img">
+                    <img src="/public/images/slider/slider1.JPG" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="half sub-bg">
+        <div class="circle-color">
+            <div class="gradient-circle"></div>
+            <div class="gradient-circle two"></div>
+        </div>
+    </div>
+</header>
+<div class="main-content">
+    <div class="team-crv section-padding">
+    </div>
+    <section class="min-area sub-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="img">
+                        <img class="thumparallax-down" src="/public/images/slider/slider2.JPG" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-6 valign">
+                    <div class="content pt-0">
+                        <h4 class="wow color-font">About us.</h4>
+                        <p class="wow txt" data-splitting><%-settings.about %>
+                        </p>
+                        <ul class="feat">
+                            <li class="wow fadeInUp" data-wow-delay=".2s">
+                                <h6><span>1</span> Our Mission</h6>
+                                <p>mission</p>
+                            </li>
+                            <li class="wow fadeInUp" data-wow-delay=".4s">
+                                <h6><span>2</span> Our Goals</h6>
+                                <p>goals</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="call-action section-padding bg-img" data-background="/public/images/patrn.svg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-lg-9">
+                    <div class="content sm-mb30">
+                        <h6 class="wow" data-splitting>Let’s Talk</h6>
+                        <h2 class="wow" data-splitting>about your <br> <b class="back-color">next project</b>.</h2>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3 valign">
+                    <a href="/contact" class="butn dark curve wow fadeInUp" data-wow-delay=".5s"><span>Get In
+                            Touch</span></a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <%- include('Partials/FooterFront'); -%>
+</div>
+</body>
+</html>
